@@ -45,6 +45,9 @@ if ("${CMAKE_SYSTEM_NAME}" MATCHES "Darwin")
     set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} /opt/boxen/homebrew/include)
 endif()
 
+set(OPENSSL_INCLUDE_DIRS /usr/include)
+set(OPENSSL_LIBRARY_DIRS /usr/lib)
+
 include(FeatureSummary)
 
 SET(LEATHERMAN_COMPONENTS locale catch nowide logging util file_util dynamic_library execution ruby rapidjson)
