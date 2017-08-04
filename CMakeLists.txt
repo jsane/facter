@@ -131,6 +131,11 @@ endif()
 include(cflags)
 set(FACTER_CXX_FLAGS "${LEATHERMAN_CXX_FLAGS}")
 
+# Enable DEP switches on windows versions
+if (WIN32)
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase")
+endif()
+
 add_definitions(${LEATHERMAN_DEFINITIONS})
 
 #
