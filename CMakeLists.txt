@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2.2)
-project(FACTER VERSION 4.0.0)
+project(FACTER VERSION 3.7.1)
 
 # Set this early, so it's available. AIX gets weird, man.
 if("${CMAKE_SYSTEM_NAME}" MATCHES "AIX")
@@ -12,6 +12,7 @@ if (NOT CMAKE_BUILD_TYPE)
 endif()
 
 option(YAMLCPP_STATIC "Use yaml-cpp's static libraries" OFF)
+option(BUILD_SHARED_LIBS "Build libfacter as a shared library" ON)
 
 set(FACTER_PATH "" CACHE PATH "Specify the location to look for specific binaries before trying PATH.")
 if (FACTER_PATH)

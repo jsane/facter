@@ -396,7 +396,7 @@ protected:
     {
         data result;
         result.version = 1;
-        result.features = { "1", "2", "3" };
+        result.versions = { "1", "2", "3" };
         return result;
     }
 };
@@ -433,7 +433,8 @@ protected:
     {
         data result;
         result.version = 1;
-        result.features = { "1", "2", "3" };
+        result.versions = { "1", "2", "3" };
+        result.feature_flags = { "async_destroy", "lz4_compress", "enabled_txg" };
         return result;
     }
 };
@@ -681,6 +682,7 @@ void validate_fact(YAML::Node const& node, value const* fact_value, bool require
     }
 }
 
+// TestRail C62454
 SCENARIO("validating schema") {
     boost::nowide::ifstream stream(LIBFACTER_TESTS_DIRECTORY "/../schema/facter.yaml");
 

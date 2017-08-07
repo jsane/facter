@@ -1,12 +1,12 @@
 /**
  * @file
- * Declares the OpenBSD virtualization fact resolver.
+ * Declares the FreeBSD virtualization fact resolver.
  */
 #pragma once
 
 #include "../resolvers/virtualization_resolver.hpp"
 
-namespace facter { namespace facts { namespace openbsd {
+namespace facter { namespace facts { namespace freebsd {
 
     /**
      * Responsible for resolving virtualization facts.
@@ -20,6 +20,8 @@ namespace facter { namespace facts { namespace openbsd {
          * @return Returns the name of the hypervisor or empty string if no hypervisor.
          */
         virtual std::string get_hypervisor(collection& facts) override;
+     private:
+        static std::string get_jail_vm();
     };
 
-}}}  // namespace facter::facts::openbsd
+}}}  // namespace facter::facts::freebsd

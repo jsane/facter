@@ -21,6 +21,7 @@ leatherman_logging_namespace("puppetlabs.facter")
 
 # Set the common (platform-independent) sources
 set(LIBFACTER_COMMON_SOURCES
+    "src/cwrapper.cc"
     "src/facts/array_value.cc"
     "src/facts/collection.cc"
     "src/facts/external/execution_resolver.cc"
@@ -203,6 +204,11 @@ elseif ("${CMAKE_SYSTEM_NAME}" MATCHES "FreeBSD")
         "src/facts/freebsd/dmi_resolver.cc"
         "src/facts/freebsd/networking_resolver.cc"
         "src/util/bsd/scoped_ifaddrs.cc"
+        "src/facts/freebsd/zfs_resolver.cc"
+        "src/facts/freebsd/zpool_resolver.cc"
+        "src/facts/freebsd/virtualization_resolver.cc"
+        "src/facts/freebsd/memory_resolver.cc"
+        "src/facts/freebsd/operating_system_resolver.cc"
     )
 elseif ("${CMAKE_SYSTEM_NAME}" MATCHES "OpenBSD")
     set(LIBFACTER_PLATFORM_SOURCES
@@ -300,8 +306,10 @@ link_directories(
 # Add the library target without a prefix (name already has the 'lib') and use '.so' for all platforms (Ruby extension file extension)
 add_library(libfactersrc OBJECT ${LIBFACTER_COMMON_SOURCES} ${LIBFACTER_STANDARD_SOURCES} ${LIBFACTER_PLATFORM_SOURCES})
 set_target_properties(libfactersrc PROPERTIES POSITION_INDEPENDENT_CODE true)
-add_library(libfacter SHARED $<TARGET_OBJECTS:libfactersrc>)
-set_target_properties(libfacter PROPERTIES PREFIX "" SUFFIX ".so" IMPORT_PREFIX "" IMPORT_SUFFIX ".so.a" VERSION ${PROJECT_VERSION})
+add_library(libfacter $<TARGET_OBJECTS:libfactersrc>)
+if (BUILD_SHARED_LIBS)
+    set_target_properties(libfacter PROPERTIES PREFIX "" SUFFIX ".so" IMPORT_PREFIX "" IMPORT_SUFFIX ".so.a" VERSION ${PROJECT_VERSION})
+endif()
 
 if(AIX)
     # On AIX we need to be built such that we are "dynamically
