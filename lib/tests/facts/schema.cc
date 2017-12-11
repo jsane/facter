@@ -17,6 +17,7 @@
 #include <internal/facts/resolvers/dmi_resolver.hpp>
 #include <internal/facts/resolvers/ec2_resolver.hpp>
 #include <internal/facts/resolvers/filesystem_resolver.hpp>
+#include <internal/facts/resolvers/fips_resolver.hpp>
 #include <internal/facts/resolvers/gce_resolver.hpp>
 #include <internal/facts/resolvers/identity_resolver.hpp>
 #include <internal/facts/resolvers/kernel_resolver.hpp>
@@ -137,6 +138,19 @@ struct filesystem_resolver : resolvers::filesystem_resolver
         return result;
     }
 };
+
+ 
+struct fips_resolver : resolvers::fips_resolver
+{
+ protected: 
+    virtual data collect_data(collection& facts) override
+    {
+        data result;
+        result.is_fips_mode_enabled = false;
+        return result;
+    }
+};
+
 
 struct identity_resolver : resolvers::identity_resolver
 {
@@ -447,6 +461,7 @@ void add_all_facts(collection& facts)
     facts.add(make_shared<disk_resolver>());
     facts.add(make_shared<dmi_resolver>());
     facts.add(make_shared<filesystem_resolver>());
+    facts.add(make_shared<fips_resolver>());
     // TODO: refactor the EC2 resolver to use the "collect_data" pattern
     facts.add(make_shared<ec2_resolver>());
     // TODO: refactor the GCE resolver to use the "collect_data" pattern
