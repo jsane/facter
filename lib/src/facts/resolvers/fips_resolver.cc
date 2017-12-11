@@ -18,8 +18,8 @@ namespace facter { namespace facts { namespace resolvers {
     {
         data result = collect_data(facts);
         // auto data = collect_data(facts);
-        if (result.is_fips_mode_enabled)
-            facts.add(fact::in_fips_mode, make_value<boolean_value>(result.is_fips_mode_enabled));
+        // if (result.is_fips_mode_enabled)
+        facts.add(fact::in_fips_mode, make_value<boolean_value>(result.is_fips_mode_enabled));
     }
 
 }}}  // namespace facter::facts::resolvers
